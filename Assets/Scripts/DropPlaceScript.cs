@@ -8,9 +8,9 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
     private float xSizeDiff, ySizeDiff;
     public ObjectScript objScript;
 
-    public void OnDrop(PointerEventData eventData) 
+    public void OnDrop(PointerEventData eventData)
     {
-        if ((eventData.pointerDrag != null) && Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2)) 
+        if ((eventData.pointerDrag != null) && Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
             if (eventData.pointerDrag.tag.Equals(tag))
             {
@@ -77,7 +77,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                             break;
                     }
                 }
-            } else
+            }
+            else
             {
                 objScript.rightPlace = false;
                 objScript.effects.PlayOneShot(objScript.audioCli[1]);

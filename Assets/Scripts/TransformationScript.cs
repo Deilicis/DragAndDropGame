@@ -1,13 +1,13 @@
 using UnityEngine;
 
 public class TransformationScript : MonoBehaviour
-{ 
-     public ObjectScript objScript; 
+{
+    public ObjectScript objScript;
     void Update()
     {
-        if (objScript.lastDragged != null) 
+        if (objScript.lastDragged != null)
         {
-            if (Input.GetKey(KeyCode.Z)) 
+            if (Input.GetKey(KeyCode.Z))
             {
                 objScript.lastDragged.GetComponent<RectTransform>().transform.Rotate(0, 0, Time.deltaTime * 15f);
             }
@@ -21,7 +21,7 @@ public class TransformationScript : MonoBehaviour
                 {
                     objScript.lastDragged.GetComponent<RectTransform>().transform.localScale = new Vector3(
                         objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.x,
-                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y+0.005f,
+                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y + 0.005f,
                         1f);
                 }
             }
@@ -55,7 +55,7 @@ public class TransformationScript : MonoBehaviour
                         1f);
                 }
             }
-        
+
         }
     }
 }
