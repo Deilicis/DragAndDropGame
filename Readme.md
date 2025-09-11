@@ -1,10 +1,10 @@
 ** To do:
-- [ ] Create the nexessary folders
-- [ ] Add necessary assets
-- [ ] Add cars to the map
-- [ ] Create C# script for dragndrop
-- [ ] Create C# script for transormation
-- [ ] Create C# script for object fixation
-- [ ] Add necessary sounds and audio sources
+- [x] Create the nexessary folders
+- [x] Add necessary assets
+- [x] Add cars to the map
+- [x] Create C# script for dragndrop
+- [x] Create C# script for transormation
+- [x] Create C# script for object fixation
+- [x] Add necessary sounds and audio sources
 - [ ] Create logic for winning
-- [ ] Create camera script for zoom-in/out and camera restrictions
+- [ ] Create camera script for zoom-in/out and camera restrictions 
