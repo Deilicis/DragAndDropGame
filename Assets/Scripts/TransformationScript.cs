@@ -17,24 +17,45 @@ public class TransformationScript : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                if (objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y < 0.85f)
+                if (objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y < 0.9f)
                 {
                     objScript.lastDragged.GetComponent<RectTransform>().transform.localScale = new Vector3(
                         objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.x,
-                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y+0.001f,
+                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y+0.005f,
                         1f);
                 }
             }
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                if (objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y < 0.85f)
+                if (objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y > 0.3f)
                 {
                     objScript.lastDragged.GetComponent<RectTransform>().transform.localScale = new Vector3(
                         objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.x,
-                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y - 0.001f,
+                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y - 0.005f,
                         1f);
                 }
             }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                if (objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.x < 0.9f)
+                {
+                    objScript.lastDragged.GetComponent<RectTransform>().transform.localScale = new Vector3(
+                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.x + 0.005f,
+                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y,
+                        1f);
+                }
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                if (objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.x > 0.3f)
+                {
+                    objScript.lastDragged.GetComponent<RectTransform>().transform.localScale = new Vector3(
+                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.x - 0.005f,
+                        objScript.lastDragged.GetComponent<RectTransform>().transform.localScale.y,
+                        1f);
+                }
+            }
+        
         }
     }
 }
