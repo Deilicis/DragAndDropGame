@@ -7,4 +7,4 @@
 - [x] Create C# script for object fixation
 - [x] Add necessary sounds and audio sources
 - [ ] Create logic for winning
-- [ ] Create camera script for zoom-in/out and camera restrictions 
+- [X] Create camera script for zoom-in/out and camera restrictions 

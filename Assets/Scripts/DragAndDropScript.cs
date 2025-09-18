@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -29,15 +29,22 @@ public class DragAndDropScript : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
-            objectScr.lastDragged = null;
+            ObjectScript.drag = true;
             canvasGro.blocksRaycasts = false;
             canvasGro.alpha = 0.6f;
-            rectTra.SetAsLastSibling();
+            //pēdējais
+            //rectTra.SetAsLastSibling();
+            //pirmspēdējais
+            int positionIndex = transform.parent.childCount - 1;
+            int position = Mathf.Max(0, positionIndex-1);
+            transform.SetSiblingIndex(position);
             Vector3 cursorWorldPos = Camera.main.ScreenToWorldPoint(
                 new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenBou.screenPoint.z));
             rectTra.position = cursorWorldPos;
             screenBou.screenPoint = Camera.main.WorldToScreenPoint(rectTra.localPosition);
             screenBou.offset = rectTra.localPosition - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenBou.screenPoint.z));
+
+            ObjectScript.lastDragged = eventData.pointerDrag;
         }
     }
     public void OnDrag(PointerEventData eventData)
@@ -53,14 +60,14 @@ public class DragAndDropScript : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         if (Input.GetMouseButton(0))
         {
-            objectScr.lastDragged = eventData.pointerDrag;
+            ObjectScript.drag = false;
             canvasGro.blocksRaycasts = true;
             canvasGro.alpha = 1.0f;
 
             if (objectScr.rightPlace)
             {
                 canvasGro.blocksRaycasts = false;
-                objectScr.lastDragged = null;
+                ObjectScript.lastDragged = null;
             }
 
             objectScr.rightPlace = false;
