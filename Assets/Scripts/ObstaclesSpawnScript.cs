@@ -23,7 +23,7 @@ public class ObstaclesSpawnScript : MonoBehaviour
         InvokeRepeating(nameof(SpawnCloud), 0f, cloudSpawnInterval);
         InvokeRepeating(nameof(SpawnObstacle), 0f, obstacleSpawnInterval);
     }
-    void SpawnCloud() 
+    void SpawnCloud()
     {
         if (cloudsPrefabs.Length == 0)
             return;
