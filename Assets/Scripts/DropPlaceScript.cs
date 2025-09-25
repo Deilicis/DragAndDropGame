@@ -8,14 +8,21 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
     private float xSizeDiff, ySizeDiff;
     public ObjectScript objScript;
 
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void OnDrop(PointerEventData eventData)
     {
-        if ((eventData.pointerDrag != null) && Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        if((eventData.pointerDrag != null) && 
+            Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
-            if (eventData.pointerDrag.tag.Equals(tag))
+            if(eventData.pointerDrag.tag.Equals(tag))
             {
-                placeZRot = eventData.pointerDrag.GetComponent<RectTransform>().transform.eulerAngles.z;
-                vehicleZRot = GetComponent<RectTransform>().transform.eulerAngles.z;
+               placeZRot = 
+                    eventData.pointerDrag.GetComponent<RectTransform>().transform.eulerAngles.z;
+                
+                vehicleZRot = 
+                    GetComponent<RectTransform>().transform.eulerAngles.z;
+
                 rotDiff = Mathf.Abs(placeZRot - vehicleZRot);
                 Debug.Log("Rotation difference: " + rotDiff);
 
@@ -26,13 +33,19 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                 Debug.Log("X size difference: " + xSizeDiff);
                 Debug.Log("Y size difference: " + ySizeDiff);
 
-                if ((rotDiff <= 5 || (rotDiff >= 355 && rotDiff <= 360)) && (xSizeDiff <= 0.05 && ySizeDiff <= 0.05))
-                {
+                if((rotDiff <= 5 || (rotDiff >= 355 && rotDiff <= 360)) &&
+                    (xSizeDiff <= 0.05 && ySizeDiff <= 0.05)) {
                     Debug.Log("Correct place");
                     objScript.rightPlace = true;
-                    eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-                    eventData.pointerDrag.GetComponent<RectTransform>().localRotation = GetComponent<RectTransform>().localRotation;
-                    eventData.pointerDrag.GetComponent<RectTransform>().localScale = GetComponent<RectTransform>().localScale;
+                    eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = 
+                        GetComponent<RectTransform>().anchoredPosition;
+
+                    eventData.pointerDrag.GetComponent<RectTransform>().localRotation = 
+                        GetComponent<RectTransform>().localRotation;
+
+                    eventData.pointerDrag.GetComponent<RectTransform>().localScale = 
+                        GetComponent<RectTransform>().localScale;
+
 
                     switch (eventData.pointerDrag.tag)
                     {
@@ -77,12 +90,13 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                             break;
                     }
                 }
-            }
-            else
+
+            } else
             {
                 objScript.rightPlace = false;
                 objScript.effects.PlayOneShot(objScript.audioCli[1]);
-                switch (eventData.pointerDrag.tag)
+
+                switch(eventData.pointerDrag.tag)
                 {
                     case "Garbage":
                         objScript.vehicles[0].GetComponent<RectTransform>().localPosition = objScript.startCoordinates[0];
@@ -123,7 +137,6 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                     default:
                         Debug.Log("Unknown tag");
                         break;
-
                 }
             }
         }
