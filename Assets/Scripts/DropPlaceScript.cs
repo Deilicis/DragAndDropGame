@@ -7,6 +7,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
     private Vector3 placeSiz, vehicleSiz;
     private float xSizeDiff, ySizeDiff;
     public ObjectScript objScript;
+    private int score;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void OnDrop(PointerEventData eventData)
@@ -36,9 +38,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                     (xSizeDiff <= 0.05 && ySizeDiff <= 0.05)) {
                     Debug.Log("Correct place");
                     objScript.rightPlace = true;
-                    ScoreManager.instance.AddScore(1);
-
-                    Debug.Log("Score: " + ScoreManager.instance.score);
+                    score = score+1;
+                    Debug.Log("Score:" + score);
                     eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = 
                         GetComponent<RectTransform>().anchoredPosition;
 
