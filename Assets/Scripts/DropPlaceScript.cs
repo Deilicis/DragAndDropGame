@@ -38,8 +38,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                     (xSizeDiff <= 0.05 && ySizeDiff <= 0.05)) {
                     Debug.Log("Correct place");
                     objScript.rightPlace = true;
-                    score = score+1;
-                    Debug.Log("Score:" + score);
+                    ScoreScript.instance.AddScore(1);
+                    Debug.Log("Score: " + ScoreScript.instance.score);
                     eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = 
                         GetComponent<RectTransform>().anchoredPosition;
 
