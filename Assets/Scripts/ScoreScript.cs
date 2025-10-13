@@ -24,7 +24,7 @@ public class ScoreScript : MonoBehaviour
 
     [Header("Buttons")]
     public Button[] restartButtons;
-    
+    public Button quitButton;
     public Button mainMenuButton;
 
     private bool gameRunning = true;
@@ -46,7 +46,8 @@ public class ScoreScript : MonoBehaviour
                     btn.onClick.AddListener(RestartLevel);
             }
         }
-
+        if(quitButton)
+            quitButton.onClick.AddListener(Application.Quit);
         if (mainMenuButton)
             mainMenuButton.onClick.AddListener(ReturnToMainMenu);
     }
@@ -135,6 +136,7 @@ public class ScoreScript : MonoBehaviour
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("TitleScreen");
+        SceneManager.LoadScene("TitleScene");
     }
+
 }
