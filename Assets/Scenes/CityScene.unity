@@ -6475,6 +6475,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 56b2df891c4919545a5f940d8ae43777, type: 3}
   - {fileID: 8300000, guid: e5fd705904f31cf45ab074b001f471ba, type: 3}
   - {fileID: 8300000, guid: e82dc05f3c153514b93ad7586dfe6bc7, type: 3}
+  - {fileID: 8300000, guid: d16873d2123d4024f828b478e035a98c, type: 3}
   rightPlace: 0
 --- !u!224 &1828800327
 RectTransform:
@@ -6557,7 +6558,7 @@ MonoBehaviour:
   - {fileID: 890523691161334413, guid: 8301ae59f5624444e87fa9b2601c0f79, type: 3}
   - {fileID: 7892726735183977665, guid: 52540a061ef6f864ab0f9fb9cc1da4b4, type: 3}
   - {fileID: 7607284154191462546, guid: 3168f9f81cf2a5149894dd005b1a6590, type: 3}
-  - {fileID: 5073066372087170623, guid: 8898194339d7942448c8b9dac6521482, type: 3}
+  - {fileID: 8084191267910729681, guid: b8c1dc9ccbcaf1c48a43644f411c7c31, type: 3}
   obstaclesPrefabs:
   - {fileID: 5875467566787315440, guid: 9027b1d9acd1517408c4f64b297f885c, type: 3}
   - {fileID: 3118316304943935039, guid: a4bb705d2bd665d45b46e6b788ba249b, type: 3}
