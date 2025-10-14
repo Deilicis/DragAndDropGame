@@ -6557,7 +6557,7 @@ MonoBehaviour:
   - {fileID: 890523691161334413, guid: 8301ae59f5624444e87fa9b2601c0f79, type: 3}
   - {fileID: 7892726735183977665, guid: 52540a061ef6f864ab0f9fb9cc1da4b4, type: 3}
   - {fileID: 7607284154191462546, guid: 3168f9f81cf2a5149894dd005b1a6590, type: 3}
-  - {fileID: 6837965406193166940, guid: 9a56172d70881f746968c0bf69a7a018, type: 3}
+  - {fileID: 5073066372087170623, guid: 8898194339d7942448c8b9dac6521482, type: 3}
   obstaclesPrefabs:
   - {fileID: 5875467566787315440, guid: 9027b1d9acd1517408c4f64b297f885c, type: 3}
   - {fileID: 3118316304943935039, guid: a4bb705d2bd665d45b46e6b788ba249b, type: 3}
@@ -6590,50 +6590,62 @@ MonoBehaviour:
     carPlace: {fileID: 1335490195}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 1217823017}
     carPlace: {fileID: 684046241}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 863689198}
     carPlace: {fileID: 150284118}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 1384993251}
     carPlace: {fileID: 1735247883}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 257092741}
     carPlace: {fileID: 769572619}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 77715996}
     carPlace: {fileID: 629496964}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 1007306405}
     carPlace: {fileID: 1195207930}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 1626844851}
     carPlace: {fileID: 1252002609}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 2093934278}
     carPlace: {fileID: 380881950}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 223783079}
     carPlace: {fileID: 780765808}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 21740894}
     carPlace: {fileID: 908551908}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   - car: {fileID: 817201677}
     carPlace: {fileID: 1012662898}
     originalPosition: {x: 0, y: 0, z: 0}
     originalRotation: {x: 0, y: 0, z: 0, w: 0}
+    originalScale: {x: 0, y: 0, z: 0}
   carSpawnPoints:
   - {fileID: 878661809}
   - {fileID: 1427277179}
@@ -6660,6 +6672,8 @@ MonoBehaviour:
   - {fileID: 959793185}
   - {fileID: 2026715927}
   - {fileID: 436783709}
+  minScaleMultiplier: 0.9
+  maxScaleMultiplier: 1.1
 --- !u!114 &1828800333
 MonoBehaviour:
   m_ObjectHideFlags: 0
