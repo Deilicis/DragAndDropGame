@@ -9,11 +9,11 @@ public class TransformationScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Z))
             {
-                ObjectScript.lastDragged.GetComponent<RectTransform>().transform.Rotate(0, 0, Time.deltaTime * 30f);
+                ObjectScript.lastDragged.GetComponent<RectTransform>().transform.Rotate(0, 0, Time.deltaTime * 40f);
             }
             if (Input.GetKey(KeyCode.X))
             {
-                ObjectScript.lastDragged.GetComponent<RectTransform>().transform.Rotate(0, 0, -Time.deltaTime * 30f);
+                ObjectScript.lastDragged.GetComponent<RectTransform>().transform.Rotate(0, 0, -Time.deltaTime * 40f);
             }
             if (Input.GetKey(KeyCode.UpArrow))
             {

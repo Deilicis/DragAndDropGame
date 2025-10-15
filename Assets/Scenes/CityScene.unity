@@ -1565,7 +1565,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480281290}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1574,7 +1574,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1020, y: -89}
+  m_AnchoredPosition: {x: 1020, y: -88.99988}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &484203131
@@ -6558,7 +6558,7 @@ MonoBehaviour:
   - {fileID: 890523691161334413, guid: 8301ae59f5624444e87fa9b2601c0f79, type: 3}
   - {fileID: 7892726735183977665, guid: 52540a061ef6f864ab0f9fb9cc1da4b4, type: 3}
   - {fileID: 7607284154191462546, guid: 3168f9f81cf2a5149894dd005b1a6590, type: 3}
-  - {fileID: 8084191267910729681, guid: b8c1dc9ccbcaf1c48a43644f411c7c31, type: 3}
+  - {fileID: 6837965406193166940, guid: 9a56172d70881f746968c0bf69a7a018, type: 3}
   obstaclesPrefabs:
   - {fileID: 5875467566787315440, guid: 9027b1d9acd1517408c4f64b297f885c, type: 3}
   - {fileID: 3118316304943935039, guid: a4bb705d2bd665d45b46e6b788ba249b, type: 3}
@@ -6566,13 +6566,13 @@ MonoBehaviour:
   - {fileID: 3894739839232579230, guid: 6ab6c46af35eaf144a41b369ce03ff16, type: 3}
   - {fileID: 1216142672875226085, guid: 89f8cb98c131d2a44bbb1d78f188074d, type: 3}
   spawnPoint: {fileID: 480281291}
-  cloudSpawnInterval: 3
+  cloudSpawnInterval: 2
   obstacleSpawnInterval: 2
   minY: -540
   maxY: 540
-  cloudMinSpeed: 1.5
+  cloudMinSpeed: 10
   cloudMaxSpeed: 150
-  obstacleMinSpeed: 2
+  obstacleMinSpeed: 10
   obstacleMaxSpeed: 200
 --- !u!114 &1828800332
 MonoBehaviour:
