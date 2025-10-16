@@ -26,3 +26,5 @@ _Unity 2D Drag And Drop games for children +6_
 - [x] Add animated clouds, vehicles, people, animals etc.
 - [x] Add flying obstacles with destroy effects
 - [x] Implemented car place and car object randomization on startup.
+- [x] Add a restart and a quit button into the city game.
+- [ ] Add bombs that destroy objects.  
