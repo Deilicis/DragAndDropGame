@@ -1,37 +1,37 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
+
 public class ObstaclesControllerScript : MonoBehaviour
 {
     [HideInInspector]
     public float speed = 1f;
+    public float fadeDuration = 1.5f;
     public float waveAmplitude = 25f;
     public float waveFrequency = 1f;
-    public float fadeDuration = 1.5f;
     private ObjectScript objectScript;
-    private ScreenBoundriesScript screenBoundriesScript;
+    private ScreenBoundriesScript scrreenBoundriesScript;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private bool isFadingOut = false;
     private bool isExploding = false;
     private Image image;
     private Color originalColor;
+
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
-        { 
+        {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
+
         rectTransform = GetComponent<RectTransform>();
 
         image = GetComponent<Image>();
         originalColor = image.color;
-
-        objectScript = Object.FindFirstObjectByType<ObjectScript>();
-        screenBoundriesScript = Object.FindFirstObjectByType<ScreenBoundriesScript>();
-
+        objectScript = FindFirstObjectByType<ObjectScript>();
+        scrreenBoundriesScript = FindFirstObjectByType<ScreenBoundriesScript>();
         StartCoroutine(FadeIn());
     }
 
@@ -40,56 +40,47 @@ public class ObstaclesControllerScript : MonoBehaviour
     {
         float waveOffset = Mathf.Sin(Time.time * waveFrequency) * waveAmplitude;
         rectTransform.anchoredPosition += new Vector2(-speed * Time.deltaTime, waveOffset * Time.deltaTime);
-        // Iznīcinās, ja lido pa kreisi
-
-        if (speed > 0 && transform.position.x < (screenBoundriesScript.minX + 80) && !isFadingOut)
+        // <-
+        if (speed > 0 && transform.position.x < (scrreenBoundriesScript.minX + 80) && !isFadingOut)
         {
-            isFadingOut = true;
             StartCoroutine(FadeOutAndDestroy());
+            isFadingOut = true;
         }
 
-        // Iznīcinās, ja lido pa labi
-
-        if (speed < 0 && transform.position.x > (screenBoundriesScript.maxX - 80) && !isFadingOut)
+        // ->
+        if (speed < 0 && transform.position.x > (scrreenBoundriesScript.maxX - 80) && !isFadingOut)
         {
-            isFadingOut = true;
             StartCoroutine(FadeOutAndDestroy());
+            isFadingOut = true;
         }
 
-        //ja neko nevelk un kursors pieskaras bumbai
-        if (CompareTag("Bomb") && !isExploding && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
+        if (CompareTag("Bomb") && !isExploding &&
+            RectTransformUtility.RectangleContainsScreenPoint(
+                rectTransform, Input.mousePosition, Camera.main))
         {
-            Debug.Log("Bomb hit by cursor");
+            Debug.Log("The cursor collided with a bomb! (without car)");
             TriggerExplosion();
         }
-        //........
 
-        if (ObjectScript.drag && !isFadingOut && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
+        // Caurskatīt no šejienes
+
+
+        if (ObjectScript.drag && !isFadingOut &&
+            RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
         {
-            Debug.Log("Obstacle hit by drag");
+            Debug.Log("The cursor collided with a flying object!");
+
             if (ObjectScript.lastDragged != null)
             {
                 StartCoroutine(ShrinkAndDestroy(ObjectScript.lastDragged, 0.5f));
                 ObjectScript.lastDragged = null;
                 ObjectScript.drag = false;
-                ScoreScript.instance.AddDestroyedCar();
             }
 
-            StartCoroutine(FadeOutAndDestroy());
-            isFadingOut = true;
-            image.color = Color.blue;
-            StartCoroutine(RecoverColor(0.3f));
-            
-            StartCoroutine(Vibrate());
-
-            if (objectScript.effects != null && objectScript.audioCli != null)
-            {
-                objectScript.effects.PlayOneShot(objectScript.audioCli[14]);
-            }
-
+            StartToDestroy();
         }
-
     }
+
     public void TriggerExplosion()
     {
         isExploding = true;
@@ -99,33 +90,38 @@ public class ObstaclesControllerScript : MonoBehaviour
         {
             animator.SetBool("explode", true);
         }
+
         image.color = Color.red;
-        StartCoroutine(RecoverColor(0.3f));
+        StartCoroutine(RecoverColor(0.4f));
+
         StartCoroutine(Vibrate());
         StartCoroutine(WaitBeforeExplode());
     }
+
     IEnumerator WaitBeforeExplode()
     {
-        float radius = 0;
+        float radius = 0f;
         if (TryGetComponent<CircleCollider2D>(out CircleCollider2D circleCollider))
         {
             radius = circleCollider.radius * transform.lossyScale.x;
-            ExplodeAndDestroyNearbyObjects(radius);
-            yield return new WaitForSeconds(1f);
-            ExplodeAndDestroyNearbyObjects(radius);
-            Destroy(gameObject);
-
         }
+        ExplodeAndDestroy(radius);
+        yield return new WaitForSeconds(1f);
+        ExplodeAndDestroy(radius);
+        Destroy(gameObject);
     }
-    void ExplodeAndDestroyNearbyObjects(float radius)
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
 
-        foreach (Collider2D hit in hits)
+    void ExplodeAndDestroy(float radius)
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, radius);
+
+        foreach (var hitCollider in hitColliders)
         {
-            if (hit != null && hit.gameObject != gameObject)
+            if (hitCollider != null && hitCollider.gameObject != gameObject)
             {
-                ObstaclesControllerScript obj = hit.GetComponent<ObstaclesControllerScript>();
+                ObstaclesControllerScript obj =
+                    hitCollider.gameObject.GetComponent<ObstaclesControllerScript>();
+
                 if (obj != null && !obj.isExploding)
                 {
                     obj.StartToDestroy();
@@ -142,72 +138,83 @@ public class ObstaclesControllerScript : MonoBehaviour
             isFadingOut = true;
 
             image.color = Color.cyan;
-            StartCoroutine(RecoverColor(.5f));
+            StartCoroutine(RecoverColor(0.5f));
+
+            objectScript.effects.PlayOneShot(objectScript.audioCli[14]);
 
             StartCoroutine(Vibrate());
-            objectScript.effects.PlayOneShot(objectScript.audioCli[14]);
         }
     }
-    IEnumerator FadeIn() 
+
+    IEnumerator Vibrate()
     {
-        float a = 0f;
-        while (a < fadeDuration)
+        Vector2 originalPosition = rectTransform.anchoredPosition;
+        float duration = 0.3f;
+        float elpased = 0f;
+        float intensity = 5f;
+
+        while (elpased < duration)
         {
-            a += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(0f, 1f, a / fadeDuration);
+            rectTransform.anchoredPosition =
+                originalPosition + Random.insideUnitCircle * intensity;
+            elpased += Time.deltaTime;
+            yield return null;
+        }
+        rectTransform.anchoredPosition = originalPosition;
+    }
+
+    IEnumerator FadeIn()
+    {
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(0f, 1f, t / fadeDuration);
             yield return null;
         }
         canvasGroup.alpha = 1f;
     }
-    IEnumerator FadeOutAndDestroy() 
+
+    IEnumerator FadeOutAndDestroy()
     {
-        float a = 0f;
+        float t = 0f;
         float startAlpha = canvasGroup.alpha;
-        while (a < fadeDuration)
+
+        while (t < fadeDuration)
         {
-            a += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, 0, a / fadeDuration);
+            t += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, t / fadeDuration);
             yield return null;
         }
-        canvasGroup.alpha = 0;
+        canvasGroup.alpha = 0f;
         Destroy(gameObject);
     }
+
     IEnumerator ShrinkAndDestroy(GameObject target, float duration)
     {
-        Vector3 originalScale = target.transform.localScale;
-        Quaternion originalRotation = target.transform.rotation;
+        Vector3 orginalScale = target.transform.localScale;
+        Quaternion orginalRotation = target.transform.rotation;
         float t = 0f;
 
         while (t < duration)
         {
             t += Time.deltaTime;
-            target.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, t / duration);
-            float angle = Mathf.Lerp(0, 360, t / duration);
-            target.transform.rotation = Quaternion.Euler(0, 0, angle);
+            target.transform.localScale = Vector3.Lerp(orginalScale, Vector3.zero, t / duration);
+            float angle = Mathf.Lerp(0f, 360f, t / duration);
+            target.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
             yield return null;
         }
-        //ko darit ar mašīnu tālāk
-        //Nav oblig jāiznīcina.(atgriezt sākumā)
+        if (objectScript != null)
+            ScoreScript.instance.AddDestroyedCar();
         Destroy(target);
     }
-    IEnumerator RecoverColor(float seconds) 
+
+    IEnumerator RecoverColor(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         image.color = originalColor;
     }
-    IEnumerator Vibrate()
-    {
-        Vector2 originalPosition = rectTransform.anchoredPosition;
-        float duration = 0.3f;
-        float elapsed = 0f;
-        float intensity = 5f;
 
-        while (elapsed < duration)
-        {
-            rectTransform.anchoredPosition = originalPosition + Random.insideUnitCircle * intensity;
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-    }
+
 }
