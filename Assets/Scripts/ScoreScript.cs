@@ -47,7 +47,7 @@ public class ScoreScript : MonoBehaviour
             }
         }
         if(quitButton)
-            quitButton.onClick.AddListener(Application.Quit);
+            quitButton.onClick.AddListener(ReturnToMainMenu);
         if (mainMenuButton)
             mainMenuButton.onClick.AddListener(ReturnToMainMenu);
     }
