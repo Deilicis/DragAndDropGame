@@ -6673,8 +6673,8 @@ MonoBehaviour:
   - {fileID: 959793185}
   - {fileID: 2026715927}
   - {fileID: 436783709}
-  minScaleMultiplier: 0.9
-  maxScaleMultiplier: 1.1
+  minScaleMultiplier: 0.85
+  maxScaleMultiplier: 1.15
 --- !u!114 &1828800333
 MonoBehaviour:
   m_ObjectHideFlags: 0
