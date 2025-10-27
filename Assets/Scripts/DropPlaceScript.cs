@@ -12,13 +12,18 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
 
     private void Start()
     {
+        if (objScript == null) 
+        {
+            objScript = Object.FindFirstObjectByType<ObjectScript>();
+        }
         randomizer = FindAnyObjectByType<CarAndPlaceRandomizer>();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        if ((eventData.pointerDrag != null) &&
-            Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        if (eventData.pointerDrag != null)
+            return;
+            // Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
             if (eventData.pointerDrag.tag.Equals(tag))
             {
