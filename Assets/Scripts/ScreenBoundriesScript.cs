@@ -44,7 +44,8 @@ public class ScreenBoundriesScript : MonoBehaviour
             {
                 changes = true;
             }
-            if (!Mathf.Approximately(targetCam.aspect, lastAspect))
+        }
+        if (!Mathf.Approximately(targetCam.aspect, lastAspect))
             {
                 changes = true;
             }
@@ -54,7 +55,7 @@ public class ScreenBoundriesScript : MonoBehaviour
             }
             if(changes)
                 RecalculateBounds();
-        }    
+         
     }
     public void RecalculateBounds()
     {
