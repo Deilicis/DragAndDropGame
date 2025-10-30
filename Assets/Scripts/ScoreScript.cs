@@ -12,15 +12,16 @@ public class ScoreScript : MonoBehaviour
     public float timer = 0f;
 
     [Header("Car Tracking")]
-    public int totalCars = 12;     // Total cars in the level
-    public int placedCars = 0;     // Successfully placed cars
-    public int destroyedCars = 0;  // Cars lost due to hazards
+    public int totalCars = 12;    
+    public int placedCars = 0;     
+    public int destroyedCars = 0;  
 
     [Header("UI")]
     public TMP_Text scoreText;
     public TMP_Text timerText;
     public Image[] stars;
-    public GameObject victoryMenu;  // Assign your Victory Menu panel here
+    public GameObject victoryMenu;
+    public GameObject victoryMenuMobile;
 
     [Header("Buttons")]
     public Button[] restartButtons;
@@ -34,22 +35,6 @@ public class ScoreScript : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
-    }
-
-    void Start()
-    {
-        if (restartButtons != null && restartButtons.Length > 0)
-        {
-            foreach (Button btn in restartButtons)
-            {
-                if (btn != null)
-                    btn.onClick.AddListener(RestartLevel);
-            }
-        }
-        if(quitButton)
-            quitButton.onClick.AddListener(ReturnToMainMenu);
-        if (mainMenuButton)
-            mainMenuButton.onClick.AddListener(ReturnToMainMenu);
     }
 
     void Update()
@@ -88,7 +73,11 @@ public class ScoreScript : MonoBehaviour
         Time.timeScale = 0f;
 
         CalculateStars();
+#if UNITY_EDITOR || UNITY_STANDALONE
         if (victoryMenu) victoryMenu.SetActive(true);
+#else
+    if (victoryMenuMobile) victoryMenuMobile.SetActive(true);
+#endif
     }
 
 
