@@ -74,9 +74,9 @@ public class ScoreScript : MonoBehaviour
 
         CalculateStars();
 #if UNITY_EDITOR || UNITY_STANDALONE
-        if (victoryMenu) victoryMenu.SetActive(true);
-#else
-    if (victoryMenuMobile) victoryMenuMobile.SetActive(true);
+         victoryMenu.SetActive(true);
+#elif UNITY_ANDROID
+     victoryMenuMobile.SetActive(true);
 #endif
     }
 
