@@ -20,7 +20,7 @@ public class ScoreScript : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text timerText;
     public Image[] stars;
-    public GameObject victoryMenu;
+   // public GameObject victoryMenu;
     public GameObject victoryMenuMobile;
 
     [Header("Buttons")]
@@ -73,11 +73,7 @@ public class ScoreScript : MonoBehaviour
         Time.timeScale = 0f;
 
         CalculateStars();
-#if UNITY_EDITOR || UNITY_STANDALONE
-         victoryMenu.SetActive(true);
-#elif UNITY_ANDROID
-     victoryMenuMobile.SetActive(true);
-#endif
+        victoryMenuMobile.SetActive(true);
     }
 
 
