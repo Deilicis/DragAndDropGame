@@ -42,11 +42,17 @@ public class CameraScript : MonoBehaviour
         transform.position = screenBoundries.GetClampedCameraPosition(transform.position);
     }
 
-    // Update is called once per frame
+
+    public bool allowMovement = true;
+
     void Update()
     {
-       if(TransformationScript.isTransforming)
+        if (!allowMovement)
             return;
+
+        if (TransformationScript.isTransforming)
+            return;
+
 #if UNITY_EDITOR || UNITY_STANDALONE
         DesktopFollowCursor();
         float scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -54,9 +60,8 @@ public class CameraScript : MonoBehaviour
         {
             cam.orthographicSize -= scroll * mouseZoomSpeed;
         }
-
 #else
-        HandleTouch();
+    HandleTouch();
 #endif
         UpdateMaxZoom();
         cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom);
