@@ -35,4 +35,9 @@ The goal of this game is to place all 12 cars into their appropriate places. Dur
 - [x] Implemented car place and car object randomization on startup.
 - [x] Implement car scale and rotation randomization on startup.
 - [x] Add a quit and restart button to the Car City scene.
-- [ ] Fix the bombs
+- [X] Fix the bombs.
+- [X] Change all onClick to touch, so it works on android.
+- [X] Fix camera max zoom.
+- [ ] Add interstitial ads, to achive financial freedom.
+- [ ] Add rewarded ads.
+- [ ] Add banner ads.
