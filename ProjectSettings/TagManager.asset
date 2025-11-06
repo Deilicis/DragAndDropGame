@@ -16,6 +16,8 @@ TagManager:
   - B2
   - E46
   - E61
+  - Bomb
+  - InterstitialAdButton
   layers:
   - Default
   - TransparentFX

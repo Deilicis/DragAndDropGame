@@ -10,7 +10,7 @@ public class ObstaclesControllerScript : MonoBehaviour
     public float waveAmplitude = 25f;
     public float waveFrequency = 1f;
     private ObjectScript objectScript;
-    private ScreenBoundriesScript scrreenBoundriesScript;
+    private ScreenBoundriesScript screenBoundriesScript;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private bool isFadingOut = false;
@@ -31,7 +31,7 @@ public class ObstaclesControllerScript : MonoBehaviour
         image = GetComponent<Image>();
         originalColor = image.color;
         objectScript = FindFirstObjectByType<ObjectScript>();
-        scrreenBoundriesScript = FindFirstObjectByType<ScreenBoundriesScript>();
+        screenBoundriesScript = FindFirstObjectByType<ScreenBoundriesScript>();
         StartCoroutine(FadeIn());
     }
 
@@ -41,14 +41,14 @@ public class ObstaclesControllerScript : MonoBehaviour
         float waveOffset = Mathf.Sin(Time.time * waveFrequency) * waveAmplitude;
         rectTransform.anchoredPosition += new Vector2(-speed * Time.deltaTime, waveOffset * Time.deltaTime);
         // <-
-        if (speed > 0 && transform.position.x < (scrreenBoundriesScript.minX + 80) && !isFadingOut)
+        if (speed > 0 && transform.position.x < (screenBoundriesScript.worldBounds.xMin + 80) && !isFadingOut)
         {
             StartCoroutine(FadeOutAndDestroy());
             isFadingOut = true;
         }
 
         // ->
-        if (speed < 0 && transform.position.x > (scrreenBoundriesScript.maxX - 80) && !isFadingOut)
+        if (speed < 0 && transform.position.x > (screenBoundriesScript.worldBounds.xMax - 80) && !isFadingOut)
         {
             StartCoroutine(FadeOutAndDestroy());
             isFadingOut = true;
@@ -82,23 +82,24 @@ public class ObstaclesControllerScript : MonoBehaviour
             StartToDestroy();
         }
     }
-    bool TryGetInputPosition(out Vector2 postion)
+    bool TryGetInputPosition(out Vector2 position)
     {
     #if UNITY_EDITOR || UNITY_STANDALONE
-        postion = Input.mousePosition;
+        position = Input.mousePosition;
         return true;
 
-    #elif UNITY_ANDROID
+#elif UNITY_ANDROID
         if(Input.touchCount>0)
         {
             position = Input.GetTouch(0).position;
+            return true;
         }
         else
         {
             position = Vector2.zero;
             return false;
         }
-    #endif
+#endif
     }
     public void TriggerExplosion()
     {
