@@ -18,6 +18,7 @@ public class MainMenuScript : MonoBehaviour
     public void Game2()
     {
         effects.PlayOneShot(audioCli[0]);
+        SceneManager.LoadScene("HanoiScene");
     }
     public void Quit()
     {

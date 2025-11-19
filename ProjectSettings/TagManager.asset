@@ -18,6 +18,8 @@ TagManager:
   - E61
   - Bomb
   - InterstitialAdButton
+  - RewardedAdButton
+  - BannerAdButton
   layers:
   - Default
   - TransparentFX
