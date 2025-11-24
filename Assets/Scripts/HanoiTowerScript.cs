@@ -7,11 +7,12 @@ public class HanoiTowerScript : MonoBehaviour
     public Transform ringAnchor; // bottom position where rings stack
 
     // Position for the next ring
-    public Vector3 GetNextRingPosition()
+    public Vector3 GetNextRingLocalPosition()
     {
-        float yOffset = rings.Count * 0.75f; // adjust 0.75f to your ring height
-        return ringAnchor.position + new Vector3(0, yOffset, 0);
+        float yOffset = rings.Count * 100f; // Adjust 50f depending on your ring height in UI units
+        return ringAnchor.localPosition + new Vector3(0, yOffset, 0);
     }
+
 
     // Can a ring be placed here?
     public bool CanPlaceRing(HanoiRingScript ring)

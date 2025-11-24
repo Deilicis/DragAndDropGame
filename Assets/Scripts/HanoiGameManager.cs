@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class HanoiGameManager : MonoBehaviour
 {
     public HanoiTowerScript towerA;
@@ -8,7 +9,8 @@ public class HanoiGameManager : MonoBehaviour
 
     [Header("Rings")]
     public HanoiRingScript[] rings;
-
+    public Button restartButton;
+    public Button mainMenuButton;
     private int totalRings;
 
     void Start()
@@ -22,21 +24,23 @@ public class HanoiGameManager : MonoBehaviour
 
     void PlaceRingsOnStart()
     {
-        towerA.rings.Clear();  // IMPORTANT!
+        towerA.rings.Clear();
 
         for (int i = 0; i < rings.Length; i++)
         {
             HanoiRingScript ring = rings[i];
 
-            // Get correct Y position based on stack count
-            Vector3 pos = towerA.GetNextRingPosition();
+            // Make ring a child of the tower
+            ring.transform.SetParent(towerA.transform, false);
 
-            ring.transform.position = pos;
+            // Assign correct local position
+            ring.transform.localPosition = towerA.GetNextRingLocalPosition();
 
             towerA.rings.Push(ring);
             ring.currentTower = towerA;
         }
     }
+
 
     void Update()
     {
@@ -44,5 +48,16 @@ public class HanoiGameManager : MonoBehaviour
         {
             Debug.Log("You Win!");
         }
+    }
+    public void RestartLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("TitleScene");
     }
 }

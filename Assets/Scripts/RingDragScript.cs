@@ -22,14 +22,18 @@ public class RingDragScript : MonoBehaviour
 
     void OnMouseDown()
     {
-        // Only top ring of its tower can be moved
         if (ring.currentTower.rings.Peek() != ring)
             return;
 
         dragging = true;
-        offset = transform.position - cam.ScreenToWorldPoint(Input.mousePosition);
+
+        Vector3 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorld.z = 0;
+
+        offset = transform.position - mouseWorld;
         originalTower = ring.currentTower;
     }
+
 
     void OnMouseUp()
     {
@@ -65,7 +69,7 @@ public class RingDragScript : MonoBehaviour
             ring.currentTower = target;
         }
 
-        transform.position = target.GetNextRingPosition();
+        transform.position = target.GetNextRingLocalPosition();
     }
 
     HanoiTowerScript GetNearestTower()
