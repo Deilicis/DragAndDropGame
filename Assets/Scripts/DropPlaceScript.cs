@@ -12,13 +12,18 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
 
     private void Start()
     {
+        if (objScript == null) 
+        {
+            objScript = Object.FindFirstObjectByType<ObjectScript>();
+        }
         randomizer = FindAnyObjectByType<CarAndPlaceRandomizer>();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        if ((eventData.pointerDrag != null) &&
-            Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        if (eventData.pointerDrag != null)
+            return;
+            // Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
             if (eventData.pointerDrag.tag.Equals(tag))
             {
@@ -34,8 +39,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                 Debug.Log("X size difference: " + xSizeDiff);
                 Debug.Log("Y size difference: " + ySizeDiff);
 
-                if ((rotDiff <= 5 || (rotDiff >= 355 && rotDiff <= 360)) &&
-                    (xSizeDiff <= 0.05 && ySizeDiff <= 0.05))
+                if ((rotDiff <= 5 || (rotDiff >= 345 && rotDiff <= 360)) &&
+                    (xSizeDiff <= 0.15 && ySizeDiff <= 0.15))
                 {
                     Debug.Log("Correct place");
                     objScript.rightPlace = true;

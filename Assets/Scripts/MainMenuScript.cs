@@ -10,16 +10,6 @@ public class MainMenuScript : MonoBehaviour
     public AudioSource effects;
     public AudioClip[] audioCli;
 
-    void Start()
-    {
-        // Assign button listeners
-        if (Game1Button)
-            Game1Button.onClick.AddListener(Game1);
-        if (Game1Button)
-            Game2Button.onClick.AddListener(Game2);
-        if (QuitButton)
-            QuitButton.onClick.AddListener(Quit);
-    }
     public void Game1()
     {
         effects.PlayOneShot(audioCli[0]);
@@ -28,6 +18,7 @@ public class MainMenuScript : MonoBehaviour
     public void Game2()
     {
         effects.PlayOneShot(audioCli[0]);
+        SceneManager.LoadScene("HanoiScene");
     }
     public void Quit()
     {
