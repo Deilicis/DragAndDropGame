@@ -1588,10 +1588,10 @@ RectTransform:
   - {fileID: 850396015}
   m_Father: {fileID: 1965802964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -112.18445, y: -235}
+  m_SizeDelta: {x: 224.3689, y: 470}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &331499182
 GameObject:
@@ -2510,7 +2510,7 @@ MonoBehaviour:
   mouseZoomSpeed: 150
   mouseFollowSpeed: 1
   touchPanSpeed: 1
-  screenBoundries: {fileID: 0}
+  screenBoundries: {fileID: 1828800328}
   cam: {fileID: 519420031}
   doubleTapMaxDelay: 0.4
   doubleTapMaxDistance: 100
@@ -2958,7 +2958,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _androidAdUnitId: Interstitial_Android
   isReady: 1
-  _interstitialAdButton: {fileID: 2146791154}
 --- !u!114 &626913048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2988,9 +2987,9 @@ MonoBehaviour:
   adsInitializer: {fileID: 626913048}
   adsInterstitial: {fileID: 626913047}
   turnOffInterstitialAd: 0
-  adsRewarded: {fileID: 0}
+  adsRewarded: {fileID: 626913052}
   turnOffRewardedAds: 0
-  bannerAd: {fileID: 0}
+  bannerAd: {fileID: 626913053}
   turnOffBannerAds: 0
 --- !u!4 &626913050
 Transform:
@@ -3032,8 +3031,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _androidAdUnitId: Rewarded_Android
-  _rewardedAdButton: {fileID: 0}
-  flayingObjectManager: {fileID: 0}
+  _rewardedAdButton: {fileID: 1027928302}
+  flayingObjectManager: {fileID: 626913051}
 --- !u!114 &626913053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3049,7 +3048,7 @@ MonoBehaviour:
   _androidAdUnitId: Banner_Android
   _bannerButton: {fileID: 0}
   isBannerVisible: 0
-  _bannerPosition: 4
+  _bannerPosition: 1
 --- !u!1 &629496963
 GameObject:
   m_ObjectHideFlags: 0
@@ -4056,7 +4055,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &850396015
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4073,7 +4072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 613, y: 941}
+  m_AnchoredPosition: {x: 41, y: -273}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &850396016
@@ -5176,8 +5175,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 613, y: 1162}
-  m_SizeDelta: {x: 90, y: 90}
+  m_AnchoredPosition: {x: -0.000041962, y: 125}
+  m_SizeDelta: {x: 119.79, y: 116.019}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1027928302
 MonoBehaviour:
@@ -9025,7 +9024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2146791154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9124,7 +9123,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 613, y: 1367}
+  m_AnchoredPosition: {x: 41, y: 153}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807

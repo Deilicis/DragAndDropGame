@@ -1,50 +1,48 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class HanoiGameManager : MonoBehaviour
 {
     public HanoiTowerScript towerA;
     public HanoiTowerScript towerB;
     public HanoiTowerScript towerC;
 
     [Header("Rings")]
-    public HanoiRingScript[] rings; // assign all rings here in Inspector
+    public HanoiRingScript[] rings;
 
     private int totalRings;
 
     void Start()
     {
-        InitializeRings();
-        totalRings = rings.Length;
-
-        // Sort rings by size (largest first)
+        // Sort largest -> smallest
         System.Array.Sort(rings, (a, b) => b.size.CompareTo(a.size));
 
-        foreach (var ring in rings)
+        PlaceRingsOnStart();
+        totalRings = rings.Length;
+    }
+
+    void PlaceRingsOnStart()
+    {
+        towerA.rings.Clear();  // IMPORTANT!
+
+        for (int i = 0; i < rings.Length; i++)
         {
+            HanoiRingScript ring = rings[i];
+
+            // Get correct Y position based on stack count
+            Vector3 pos = towerA.GetNextRingPosition();
+
+            ring.transform.position = pos;
+
             towerA.rings.Push(ring);
             ring.currentTower = towerA;
-            ring.transform.position = towerA.GetNextRingPosition();
         }
     }
 
     void Update()
     {
-        // Check win: all rings on TowerC
         if (towerC.rings.Count == totalRings)
         {
             Debug.Log("You Win!");
-            // TODO: Show victory UI
-        }
-    }
-    void InitializeRings()
-    {
-        foreach (var ring in rings)
-        {
-            float yOffset = towerA.rings.Count * 0.5f;
-            ring.transform.position = towerA.ringAnchor.position + new Vector3(0, yOffset, 0);
-
-            towerA.rings.Push(ring);
-            ring.currentTower = towerA;
         }
     }
 }

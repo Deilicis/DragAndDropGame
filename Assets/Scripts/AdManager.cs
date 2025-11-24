@@ -30,11 +30,18 @@ public class AdManager : MonoBehaviour
         }
 
         Instance = this;
-
         DontDestroyOnLoad(gameObject);
 
+
         adsInitializer.OnAdsInitialized += HandleAdsInitialized;
+
+        if (adsInterstitial == null)
+            adsInterstitial = FindFirstObjectByType<AdsInterstitial>();
+
+        if (adsInterstitial != null)
+            adsInterstitial.LoadAd();
     }
+
 
     private void HandleAdsInitialized()
     {
@@ -57,17 +64,9 @@ public class AdManager : MonoBehaviour
 
     private void HandleInterstitialReady()
     {
-        if (!firstAdShown)
-        {
-            Debug.Log("Showing first time interstitial ad automatically!");
-            adsInterstitial.ShowAd();
-            firstAdShown = true;
-
-        }
-        else
-        {
+    
             Debug.Log("Next interstitial ad is ready for manual show!");
-        }
+   
     }
 
     private void OnEnable()
@@ -86,29 +85,20 @@ public class AdManager : MonoBehaviour
         if (adsInterstitial == null)
             adsInterstitial = FindFirstObjectByType<AdsInterstitial>();
 
-        Button interstitialButton =
-            GameObject.FindGameObjectWithTag("InterstitialAdButton").GetComponent<Button>();
-
-        if (adsInterstitial != null && interstitialButton != null)
-        {
-            adsInterstitial.SetButton(interstitialButton);
-        }
-
 
         if (adsRewarded == null)
             adsRewarded = FindFirstObjectByType<AdsRewarded>();
         if (bannerAd == null)
             bannerAd = FindFirstObjectByType<AdsBanner>();
-        Button rewardedAdButton =
-            GameObject.FindGameObjectWithTag("RewardedAdButton").GetComponent<Button>();
-
-        if (adsRewarded != null && rewardedAdButton != null)
-            adsRewarded.SetButton(rewardedAdButton);
-
-        Button bannerButton = GameObject.FindGameObjectWithTag("BannerAdButton").GetComponent<Button>();
-        if(bannerAd != null && bannerButton != null)
+        GameObject btnObj = GameObject.FindGameObjectWithTag("RewardedAdButton");
+        if (btnObj != null)
         {
-            bannerAd.SetButton(bannerButton);
+            Button rewardedAdButton = btnObj.GetComponent<Button>();
+            adsRewarded.SetButton(rewardedAdButton);
+        }
+        else
+        {
+            Debug.LogWarning("Rewarded ad button not found in scene!");
         }
         if (!firstSceneLoad)
         {
@@ -118,7 +108,12 @@ public class AdManager : MonoBehaviour
         }
 
         Debug.Log("Scene loaded!");
-        HandleAdsInitialized();
+        if (scene.name != "TitleScene")
+        {
+            if (adsInterstitial.isReady)
+                adsInterstitial.ShowAd();
+        }
+
 
     }
 }

@@ -11,25 +11,10 @@ public class AdsInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 
     public event Action OnInterstitialAdReady;
     public bool isReady = false;
-    [SerializeField] Button _interstitialAdButton;
     
     void Awake()
     {
         _adUnitId = _androidAdUnitId;
-    }
-
-    private void FixedUpdate()
-    {
-        if (AdManager.Instance != null && AdManager.Instance.adsInterstitial != null) 
-        {
-            _interstitialAdButton.interactable = isReady;
-        }
-    }
-
-    public void OnInterstitialAdButtonClicked()
-    {
-        Debug.Log("Interstitial ad button clicked");
-        ShowInterstitial();
     }
 
     public void LoadAd()
@@ -74,7 +59,6 @@ public class AdsInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsAdLoaded(string placementId)
     {
         Debug.Log("Interstitial ad loaded.");
-        _interstitialAdButton.interactable = true;
         isReady = true;
         OnInterstitialAdReady?.Invoke();
     }
@@ -126,14 +110,4 @@ public class AdsInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         Time.timeScale = 0f;
     }
 
-    public void SetButton(Button button)
-    {
-        if (button == null)
-            return;
-
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(OnInterstitialAdButtonClicked);
-        _interstitialAdButton = button;
-        _interstitialAdButton.interactable = false;
-    }
 }

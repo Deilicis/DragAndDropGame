@@ -10,6 +10,7 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     [SerializeField] Button _rewardedAdButton;
     public FlyingObjectManager flayingObjectManager;
+    private bool isReady = false;
 
 
     private void Awake()
@@ -34,11 +35,12 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void OnUnityAdsAdLoaded(string placementId)
     {
-        Debug.Log("Rewarded ad loaded!");
-
-        if (placementId.Equals(_adUnitId))
+        if (placementId == _adUnitId)
         {
-            _rewardedAdButton.interactable = true;
+            Debug.Log("Rewarded ad loaded!");
+            isReady = true;
+            if (_rewardedAdButton != null)
+                _rewardedAdButton.interactable = true;
         }
     }
 
@@ -98,7 +100,17 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void ShowAd()
     {
-        _rewardedAdButton.interactable = false;
+        if (!isReady)
+        {
+            Debug.LogWarning("Rewarded ad is not ready yet.");
+            LoadAd();
+            return;
+        }
+
+        Debug.Log("Showing rewarded ad...");
         Advertisement.Show(_adUnitId, this);
+        isReady = false;
+        _rewardedAdButton.interactable = false;
     }
+
 }

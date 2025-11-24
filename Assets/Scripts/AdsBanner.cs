@@ -16,6 +16,7 @@ public class AdsBanner : MonoBehaviour
     {
         _adUnitId = _androidAdUnitId;
         Advertisement.Banner.SetPosition(_bannerPosition);
+        ShowBannerAd();
     }
     public void LoadBanner()
     {
