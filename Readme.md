@@ -12,7 +12,8 @@ The goal of this game is to place all 12 cars into their appropriate places. Dur
 
 
 # 2. Hanoi Tower
-(Work in progress)
+<img width="704" height="341" alt="image" src="https://github.com/user-attachments/assets/660c85cd-702f-44bb-a140-4b66739b1550" />
+The goal of this game is to place all 5 rings onto the 3rd tower. During the game, your moves are counted and in the end, your score is rated from 1-3 stars.
 
 
 
@@ -38,6 +39,8 @@ The goal of this game is to place all 12 cars into their appropriate places. Dur
 - [X] Fix the bombs.
 - [X] Change all onClick to touch, so it works on android.
 - [X] Fix camera max zoom.
-- [ ] Add interstitial ads, to achive financial freedom.
-- [ ] Add rewarded ads.
-- [ ] Add banner ads.
+- [X] Add interstitial ads, to achive financial freedom.
+- [X] Add rewarded ads.
+- [X] Add banner ads.
+- [X] Create Hanoi game.
+- [X] Add banner ads to Hanoi Tower game.
