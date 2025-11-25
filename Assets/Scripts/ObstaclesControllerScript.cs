@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class ObstaclesControllerScript : MonoBehaviour
 {
-    [HideInInspector]
-    public float speed = 1f;
+    [HideInInspector] public float speed = 1f;
     public float fadeDuration = 1.5f;
     public float waveAmplitude = 25f;
     public float waveFrequency = 1f;
+
     private ObjectScript objectScript;
     private ScreenBoundriesScript screenBoundriesScript;
     private CanvasGroup canvasGroup;
@@ -27,45 +27,41 @@ public class ObstaclesControllerScript : MonoBehaviour
         }
 
         rectTransform = GetComponent<RectTransform>();
-
         image = GetComponent<Image>();
         originalColor = image.color;
+
         objectScript = FindFirstObjectByType<ObjectScript>();
         screenBoundriesScript = FindFirstObjectByType<ScreenBoundriesScript>();
+
         StartCoroutine(FadeIn());
     }
 
-    // Update is called once per frame
     void Update()
     {
         float waveOffset = Mathf.Sin(Time.time * waveFrequency) * waveAmplitude;
         rectTransform.anchoredPosition += new Vector2(-speed * Time.deltaTime, waveOffset * Time.deltaTime);
-        // <-
+
         if (speed > 0 && transform.position.x < (screenBoundriesScript.worldBounds.xMin + 80) && !isFadingOut)
         {
             StartCoroutine(FadeOutAndDestroy());
             isFadingOut = true;
         }
 
-        // ->
         if (speed < 0 && transform.position.x > (screenBoundriesScript.worldBounds.xMax - 80) && !isFadingOut)
         {
             StartCoroutine(FadeOutAndDestroy());
             isFadingOut = true;
         }
+
         Vector2 inputPosition;
-        if (!TryGetInputPosition(out inputPosition))
-            return;
+        if (!TryGetInputPosition(out inputPosition)) return;
+
         if (CompareTag("Bomb") && !isExploding &&
-            RectTransformUtility.RectangleContainsScreenPoint(
-                rectTransform, inputPosition, Camera.main))
+            RectTransformUtility.RectangleContainsScreenPoint(rectTransform, inputPosition, Camera.main))
         {
             Debug.Log("The cursor collided with a bomb! (without car)");
             TriggerExplosion();
         }
-
-        // Caurskatīt no šejienes
-
 
         if (ObjectScript.drag && !isFadingOut &&
             RectTransformUtility.RectangleContainsScreenPoint(rectTransform, inputPosition, Camera.main))
@@ -82,14 +78,14 @@ public class ObstaclesControllerScript : MonoBehaviour
             StartToDestroy();
         }
     }
+
     bool TryGetInputPosition(out Vector2 position)
     {
-    #if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE
         position = Input.mousePosition;
         return true;
-
 #elif UNITY_ANDROID
-        if(Input.touchCount>0)
+        if(Input.touchCount > 0)
         {
             position = Input.GetTouch(0).position;
             return true;
@@ -101,6 +97,7 @@ public class ObstaclesControllerScript : MonoBehaviour
         }
 #endif
     }
+
     public void TriggerExplosion()
     {
         isExploding = true;
@@ -113,7 +110,6 @@ public class ObstaclesControllerScript : MonoBehaviour
 
         image.color = Color.red;
         StartCoroutine(RecoverColor(0.4f));
-
         StartCoroutine(Vibrate());
         StartCoroutine(WaitBeforeExplode());
     }
@@ -125,6 +121,7 @@ public class ObstaclesControllerScript : MonoBehaviour
         {
             radius = circleCollider.radius * transform.lossyScale.x;
         }
+
         ExplodeAndDestroy(radius);
         yield return new WaitForSeconds(1f);
         ExplodeAndDestroy(radius);
@@ -139,9 +136,7 @@ public class ObstaclesControllerScript : MonoBehaviour
         {
             if (hitCollider != null && hitCollider.gameObject != gameObject)
             {
-                ObstaclesControllerScript obj =
-                    hitCollider.gameObject.GetComponent<ObstaclesControllerScript>();
-
+                ObstaclesControllerScript obj = hitCollider.gameObject.GetComponent<ObstaclesControllerScript>();
                 if (obj != null && !obj.isExploding)
                 {
                     obj.StartToDestroy();
@@ -161,7 +156,6 @@ public class ObstaclesControllerScript : MonoBehaviour
             StartCoroutine(RecoverColor(0.5f));
 
             objectScript.effects.PlayOneShot(objectScript.audioCli[14]);
-
             StartCoroutine(Vibrate());
         }
     }
@@ -173,16 +167,16 @@ public class ObstaclesControllerScript : MonoBehaviour
 #endif
         Vector2 originalPosition = rectTransform.anchoredPosition;
         float duration = 0.3f;
-        float elpased = 0f;
+        float elapsed = 0f;
         float intensity = 5f;
 
-        while (elpased < duration)
+        while (elapsed < duration)
         {
-            rectTransform.anchoredPosition =
-                originalPosition + Random.insideUnitCircle * intensity;
-            elpased += Time.deltaTime;
+            rectTransform.anchoredPosition = originalPosition + Random.insideUnitCircle * intensity;
+            elapsed += Time.deltaTime;
             yield return null;
         }
+
         rectTransform.anchoredPosition = originalPosition;
     }
 
@@ -202,34 +196,37 @@ public class ObstaclesControllerScript : MonoBehaviour
     {
         float t = 0f;
         float startAlpha = canvasGroup.alpha;
-
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
             canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, t / fadeDuration);
             yield return null;
         }
+
         canvasGroup.alpha = 0f;
         Destroy(gameObject);
     }
 
     IEnumerator ShrinkAndDestroy(GameObject target, float duration)
     {
-        Vector3 orginalScale = target.transform.localScale;
-        Quaternion orginalRotation = target.transform.rotation;
+        Vector3 originalScale = target.transform.localScale;
+        Quaternion originalRotation = target.transform.rotation;
         float t = 0f;
 
         while (t < duration)
         {
             t += Time.deltaTime;
-            target.transform.localScale = Vector3.Lerp(orginalScale, Vector3.zero, t / duration);
+            target.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, t / duration);
             float angle = Mathf.Lerp(0f, 360f, t / duration);
             target.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-
             yield return null;
         }
-        if (objectScript != null)
+
+        if (objectScript != null && ScoreScript.instance != null)
+        {
             ScoreScript.instance.AddDestroyedCar();
+        }
+
         Destroy(target);
     }
 
@@ -238,6 +235,4 @@ public class ObstaclesControllerScript : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         image.color = originalColor;
     }
-
-
 }

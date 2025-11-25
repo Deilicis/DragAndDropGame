@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HanoiBackground_0: 1096357486184278166
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

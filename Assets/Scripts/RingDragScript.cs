@@ -1,94 +1,119 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class RingDragScript : MonoBehaviour
+public class RingDragScript : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    private Camera cam;
-    private bool dragging = false;
-    private Vector3 offset;
+    private RectTransform rect;
+    private Canvas canvas;
+    private Vector2 offset;
 
     private HanoiRingScript ring;
     private HanoiTowerScript originalTower;
 
-    [Header("Towers")]
+    public RectTransform towerAPos;
+    public RectTransform towerBPos;
+    public RectTransform towerCPos;
+
     public HanoiTowerScript towerA;
     public HanoiTowerScript towerB;
     public HanoiTowerScript towerC;
+    private HanoiGameManager gm;
 
-    private void Start()
+    private void Awake()
     {
-        cam = Camera.main;
+        rect = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
         ring = GetComponent<HanoiRingScript>();
+
+        gm = FindObjectOfType<HanoiGameManager>();
     }
 
-    void OnMouseDown()
+    public void OnPointerDown(PointerEventData eventData)
     {
+        if (gm.gameWon) return;  // <- BLOCK input
+
         if (ring.currentTower.rings.Peek() != ring)
             return;
 
-        dragging = true;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.transform as RectTransform,
+            eventData.position,
+            canvas.worldCamera,
+            out var localMousePos);
 
-        Vector3 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorld.z = 0;
-
-        offset = transform.position - mouseWorld;
+        offset = rect.anchoredPosition - localMousePos;
         originalTower = ring.currentTower;
     }
 
 
-    void OnMouseUp()
+    public void OnDrag(PointerEventData eventData)
     {
-        dragging = false;
+        if (gm.gameWon) return;  // <- BLOCK input
+
+        if (ring.currentTower.rings.Peek() != ring)
+            return;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.transform as RectTransform,
+            eventData.position,
+            canvas.worldCamera,
+            out var localMousePos);
+
+        rect.anchoredPosition = localMousePos + offset;
+    }
+
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (gm.gameWon) return;  // <- BLOCK input
 
         HanoiTowerScript nearest = GetNearestTower();
 
         if (nearest != null && nearest.CanPlaceRing(ring))
-        {
             PlaceOnTower(nearest);
-        }
         else
-        {
-            PlaceOnTower(originalTower); // snap back
-        }
+            PlaceOnTower(originalTower);
     }
 
-    void Update()
+
+    private HanoiTowerScript GetNearestTower()
     {
-        if (!dragging) return;
+        Vector3 ringWorldPos = rect.position;
 
-        Vector3 pos = cam.ScreenToWorldPoint(Input.mousePosition);
-        pos.z = 0;
-        transform.position = pos + offset;
+        float distA = Vector3.Distance(ringWorldPos, towerAPos.position);
+        float distB = Vector3.Distance(ringWorldPos, towerBPos.position);
+        float distC = Vector3.Distance(ringWorldPos, towerCPos.position);
+
+        if (distA < distB && distA < distC) return towerA;
+        if (distB < distC) return towerB;
+        return towerC;
     }
 
-    void PlaceOnTower(HanoiTowerScript target)
+
+    private void PlaceOnTower(HanoiTowerScript target)
     {
         if (ring.currentTower != target)
         {
             ring.currentTower.rings.Pop();
             target.rings.Push(ring);
             ring.currentTower = target;
+
+            // Count the move
+            HanoiGameManager gm = FindObjectOfType<HanoiGameManager>();
+
+            gm.moves++;
+            gm.movesText.text = "Moves: " + gm.moves;
+            gm.movesTextScene.text = "Moves: " + gm.moves;
+
+
         }
 
-        transform.position = target.GetNextRingLocalPosition();
+
+        // Make ring a child of the tower BEFORE setting position
+        rect.SetParent(target.transform, false);
+
+        // Now the localPosition aligns with the tower properly
+        rect.anchoredPosition = target.GetNextRingLocalPosition();
     }
 
-    HanoiTowerScript GetNearestTower()
-    {
-        HanoiTowerScript nearest = null;
-        float minDist = float.MaxValue;
-
-        HanoiTowerScript[] towers = new HanoiTowerScript[] { towerA, towerB, towerC };
-
-        foreach (var t in towers)
-        {
-            float dist = Vector2.Distance(transform.position, t.transform.position);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                nearest = t;
-            }
-        }
-
-        return nearest;
-    }
 }

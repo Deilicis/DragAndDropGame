@@ -2935,8 +2935,8 @@ GameObject:
   - component: {fileID: 626913048}
   - component: {fileID: 626913047}
   - component: {fileID: 626913052}
-  - component: {fileID: 626913051}
   - component: {fileID: 626913053}
+  - component: {fileID: 626913051}
   m_Layer: 0
   m_Name: Ads
   m_TagString: Untagged
@@ -3046,7 +3046,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _androidAdUnitId: Banner_Android
-  _bannerButton: {fileID: 0}
   isBannerVisible: 0
   _bannerPosition: 1
 --- !u!1 &629496963
@@ -9133,8 +9132,8 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 1565303949}
+  - {fileID: 1828800327}
   - {fileID: 791515617}
   - {fileID: 401162767}
   - {fileID: 626913050}
-  - {fileID: 1828800327}
   - {fileID: 1512002028}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -7,6 +8,7 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 {
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     string _adUnitId;
+    public event Action OnRewardedHanoi;
 
     [SerializeField] Button _rewardedAdButton;
     public FlyingObjectManager flayingObjectManager;
@@ -16,11 +18,11 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     private void Awake()
     {
         _adUnitId = _androidAdUnitId;
+        Debug.Log("AdsRewarded Awake called, _adUnitId = " + _adUnitId);
 
         if (flayingObjectManager == null)
             flayingObjectManager = FindFirstObjectByType<FlyingObjectManager>();
     }
-
     public void LoadAd()
     {
         if (!Advertisement.isInitialized)
@@ -32,7 +34,10 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         Debug.Log("Loading rewarded ad.");
         Advertisement.Load(_adUnitId, this);
     }
-
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
     public void OnUnityAdsAdLoaded(string placementId)
     {
         if (placementId == _adUnitId)
@@ -74,32 +79,38 @@ public class AdsRewarded : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-
-        //if (placementId.Equals(_adUnitId) &&
-        //  showCompletionState.Equals(UnityAdsCompletionState.COMPLETED)) {
         Debug.Log("Rewarded ad completed!");
-        flayingObjectManager.DestroyAllFlyingObjects();
-        _rewardedAdButton.interactable = false;
+
+        // Car game reward
+        if (flayingObjectManager != null)
+            flayingObjectManager.DestroyAllFlyingObjects();
+
+        // Hanoi Tower reward
+        OnRewardedHanoi?.Invoke();
+
+        if (_rewardedAdButton != null)
+            _rewardedAdButton.interactable = false;
+
         StartCoroutine(WaitAndLoad(10f));
-        // }
 
         Time.timeScale = 1f;
     }
 
+
     public void SetButton(Button button)
     {
-        if (button == null)
-        {
-            return;
-        }
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(ShowAd);
+        if (button == null) return;
+
         _rewardedAdButton = button;
-        _rewardedAdButton.interactable = false;
+        _rewardedAdButton.interactable = false; // disable until ad is loaded
+        _rewardedAdButton.onClick.RemoveAllListeners();
+        _rewardedAdButton.onClick.AddListener(ShowAd);
+    
     }
 
+
     public void ShowAd()
-    {
+     {
         if (!isReady)
         {
             Debug.LogWarning("Rewarded ad is not ready yet.");

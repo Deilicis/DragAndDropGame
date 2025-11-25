@@ -7,7 +7,6 @@ public class AdsBanner : MonoBehaviour
     [SerializeField] string _androidAdUnitId = "Banner_Android";
     string _adUnitId;
 
-    [SerializeField] Button _bannerButton;
     public bool isBannerVisible = false;
 
     [SerializeField] BannerPosition _bannerPosition = BannerPosition.BOTTOM_CENTER;
@@ -39,7 +38,6 @@ public class AdsBanner : MonoBehaviour
     void OnBannerLoaded()
     {
         Debug.Log("Banner ad loaded.");
-        _bannerButton.interactable = true;
     }
 
     void OnBannerError(string message)
@@ -84,15 +82,5 @@ public class AdsBanner : MonoBehaviour
     {
         Debug.Log("Banner ad visible.");
         isBannerVisible = true;
-    }
-    public void SetButton(Button button)
-    {
-        if (button == null)
-        return;
-
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(ShowBannerAd);
-        _bannerButton = button;
-        _bannerButton.interactable = false;
     }
 }

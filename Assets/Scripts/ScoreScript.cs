@@ -12,15 +12,15 @@ public class ScoreScript : MonoBehaviour
     public float timer = 0f;
 
     [Header("Car Tracking")]
-    public int totalCars = 12;    
-    public int placedCars = 0;     
-    public int destroyedCars = 0;  
+    public int totalCars = 12;
+    public int placedCars = 0;
+    public int destroyedCars = 0;
 
     [Header("UI")]
     public TMP_Text scoreText;
     public TMP_Text timerText;
     public Image[] stars;
-   // public GameObject victoryMenu;
+    // public GameObject victoryMenu;
     public GameObject victoryMenuMobile;
 
     [Header("Buttons")]
@@ -30,20 +30,16 @@ public class ScoreScript : MonoBehaviour
 
     private bool gameRunning = true;
     private bool gameEnded = false;
-
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        instance = this;
     }
-
     void Update()
     {
         if (gameRunning)
         {
             timer += Time.deltaTime;
-        
-        UpdateUI();
+            UpdateUI();
 
             // Check for win condition
             if (placedCars + destroyedCars >= totalCars && !gameEnded)
@@ -76,12 +72,12 @@ public class ScoreScript : MonoBehaviour
         victoryMenuMobile.SetActive(true);
     }
 
-
     private void UpdateUI()
     {
         int hours = Mathf.FloorToInt(timer / 3600);
         int minutes = Mathf.FloorToInt((timer % 3600) / 60);
         int seconds = Mathf.FloorToInt(timer % 60);
+
         if (scoreText) scoreText.text = $"{score}/{totalCars}";
         if (timerText) timerText.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
@@ -115,6 +111,7 @@ public class ScoreScript : MonoBehaviour
     public void RestartLevel()
     {
         Time.timeScale = 1f;
+        ScoreScript.instance = null;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -123,5 +120,4 @@ public class ScoreScript : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("TitleScene");
     }
-
 }
